@@ -58,7 +58,7 @@ body {
   font-weight: 300; text-shadow: 0 1px 10px rgba(0,0,0,0.4);
 }
 
-.container { max-width: var(--max-width); margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+.container { max-width: var(--max-width); margin: 0 auto; padding: 3.5rem 1.25rem 4rem; }
 
 .post-card {
   background: var(--card); border: 1px solid var(--card-border);
