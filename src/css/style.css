@@ -27,8 +27,8 @@ body {
 
 .hero {
   position: relative;
-  height: 65vh;
-  min-height: 440px;
+  height: 32vh;
+  min-height: 240px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,7 +50,7 @@ body {
     rgba(247,244,238,0.25) 70%, var(--bg) 100%);
 }
 .hero-content { position: relative; z-index: 1; text-align: center; }
-.hero h1 { font-size: 3.2rem; font-weight: 700; letter-spacing: 0.04em; color: #fff; text-shadow: 0 2px 18px rgba(0,0,0,0.45); }
+.hero h1 { font-size: 2.4rem; font-weight: 700; letter-spacing: 0.04em; color: #fff; text-shadow: 0 2px 18px rgba(0,0,0,0.45); }
 .hero p {
   margin-top: 0.8rem; font-size: 1.15rem; color: rgba(255,255,255,0.92);
   font-weight: 300; text-shadow: 0 1px 10px rgba(0,0,0,0.4);
@@ -128,8 +128,8 @@ article hr { border: none; border-top: 1px solid var(--divider); margin: 2.5rem 
 .katex { font-size: 1.05em; }
 
 @media (max-width: 640px) {
-  .hero { height: 45vh; min-height: 300px; }
-  .hero h1 { font-size: 2.2rem; }
+  .hero { height: 28vh; min-height: 200px; }
+  .hero h1 { font-size: 1.8rem; }
   article h1 { font-size: 1.6rem; }
   article { padding: 1.5rem 1rem 3rem; }
   .container { padding: 1.5rem 1rem 4rem; }
