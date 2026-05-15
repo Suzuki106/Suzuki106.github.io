@@ -1,60 +1,11 @@
-2026/2/16
-Lecture 1我们是相当于回顾了NLP的发展历程，并由此顺到了Transformer，明白了什么是QKV，明白了Encoder self attention, Decoder self attention以及Encoder-Decoder attention(Cross attention)之间的区别，无非就是QKV的来源不同。
-但关于Transformer，有一个问题没有解释清楚，那就是“位置”。
-Transformer本身的Query是直接面向全局查询，因此无法理解“位置”的含义。
-**为此，我们需要进行位置编码。这也是过渡到下一节内容的疑问**。
+2026/2/16 Lecture 1我们是相当于回顾了NLP的发展历程，并由此顺到了Transformer，明白了什么是QKV，明白了Encoder self attention, Decoder self attention以及Encoder-Decoder attention(Cross attention)之间的区别，无非就是QKV的来源不同。 但关于Transformer，有一个问题没有解释清楚，那就是“位置”。 Transformer本身的Query是直接面向全局查询，因此无法理解“位置”的含义。 **为此，我们需要进行位置编码。这也是过渡到下一节内容的疑问**。
 
-来到Lecture 2，我们讲了正余弦编码解决绝对位置，讲了RoPE解决相对位置。讲了正则化层和稀疏矩阵。然后深挖啦BERT的原理。
-这里我们暂且按下不表，先看Lecture 3
-**需要注意的是，1、2、3讲是一个部分，讲Transformer的纯理论知识。而4、5、6三讲合起来又是一个部分，讲LLM的训练、微调再到最后的推理，是工程性质的内容。
-之后7讲RAG和Agent，8讲LLM的性能评估，9讲则是对未来的展望。
-所以，在看完Lecture 3之后，请停下来休息一会儿，对自己所学进行一个完整复盘**。
+来到Lecture 2，我们讲了正余弦编码解决绝对位置，讲了RoPE解决相对位置。讲了正则化层和稀疏矩阵。然后深挖啦BERT的原理。 这里我们暂且按下不表，先看Lecture 3 **需要注意的是，1、2、3讲是一个部分，讲Transformer的纯理论知识。而4、5、6三讲合起来又是一个部分，讲LLM的训练、微调再到最后的推理，是工程性质的内容。 之后7讲RAG和Agent，8讲LLM的性能评估，9讲则是对未来的展望。 所以，在看完Lecture 3之后，请停下来休息一会儿，对自己所学进行一个完整复盘**。
 
-回来了。
-Lecture 3其实已经开始涉及LLM的知识了。
-LLM只拿走了Transformer的Decoder self attention部分。因为LLM在做的只是给你生成文段，只有generate的任务。那当然只拿Decoder部分就可以啦。
-LLM规模庞大，每次FFN都把参数过一遍会很浪费。于是有了MoE，更准确来说是Sparse MoE，每次只选择相关的专家。由此，把原Transformer的FFN改为了MoE-FFN。
-在generate/response时，你刻板印象里的生成方式是，softmax选概率最大的那个。
-**对，也不全对**。
-那种方式叫贪心，方法就是选最大。
-但是generate/response还有别的方法：
-贪心：softmax取最大
-Beam：保持k条最有可能的路径
-Sampling：以一定方式随机采样token。常见的方法有tok-k和top-p
-temperature的概念就多余解释。就是在softmax之前对参数进行放缩。
-而后的Guided Decoding、ICL、CoT、Self consistency都只是一些简单的概念和prompt工程而已，实际理解难度不大。
-**最后是推理优化部分，可讲的非常多**。
-推理优化其实可以分两个大方向：Exact和Approximations
-我说两个例子，你就知道这两种优化方向分别代表着什么了：
-Exact：KV Cache、PagedAttention
-Approximations：推测解码(Speculative decoding)、MTP、MHA->CGA/MGA
-可以说你刻板印象当中AI Infra和MLsys那种通过让AI适配硬件、适配系统来优化自身的方向，就是Exact。
-而类似知识蒸馏、Query分组等“稍微有些修改大模型质量”的优化方向，就是Approximations。
-**推理优化可以讲的东西非常非常多，同时也非常非常地前沿。我很想说这一部分的内容已经丰富到足以单开一门课程了，但因为推理优化过于前沿，所以这样先锋的东西暂时还无法成体系地教授**。
+回来了。 Lecture 3其实已经开始涉及LLM的知识了。 LLM只拿走了Transformer的Decoder self attention部分。因为LLM在做的只是给你生成文段，只有generate的任务。那当然只拿Decoder部分就可以啦。 LLM规模庞大，每次FFN都把参数过一遍会很浪费。于是有了MoE，更准确来说是Sparse MoE，每次只选择相关的专家。由此，把原Transformer的FFN改为了MoE-FFN。 在generate/response时，你刻板印象里的生成方式是，softmax选概率最大的那个。 **对，也不全对**。 那种方式叫贪心，方法就是选最大。 但是generate/response还有别的方法： 贪心：softmax取最大 Beam：保持k条最有可能的路径 Sampling：以一定方式随机采样token。常见的方法有tok-k和top-p temperature的概念就多余解释。就是在softmax之前对参数进行放缩。 而后的Guided Decoding、ICL、CoT、Self consistency都只是一些简单的概念和prompt工程而已，实际理解难度不大。 **最后是推理优化部分，可讲的非常多**。 推理优化其实可以分两个大方向：Exact和Approximations 我说两个例子，你就知道这两种优化方向分别代表着什么了： Exact：KV Cache、PagedAttention Approximations：推测解码(Speculative decoding)、MTP、MHA->CGA/MGA 可以说你刻板印象当中AI Infra和MLsys那种通过让AI适配硬件、适配系统来优化自身的方向，就是Exact。 而类似知识蒸馏、Query分组等“稍微有些修改大模型质量”的优化方向，就是Approximations。 **推理优化可以讲的东西非常非常多，同时也非常非常地前沿。我很想说这一部分的内容已经丰富到足以单开一门课程了，但因为推理优化过于前沿，所以这样先锋的东西暂时还无法成体系地教授**。
 
-接下来从Lecture 4到Lecture 6几乎都是纯工程内容，你全部看完以后再来记录。
-回来了。春晚实在是太烂了，还不如看讲座呢。
-其实Lecture 3就已经是在讲LLM了，只不过讲的是推理部分。
-你先别急着问为什么先讲推理再讲训练，我也想问。
-言归正传，我们来看Lecture 4到6
-Lecture 4讲了LLM的训练。
-预训练的概念很简单了，我们不再重复。就说一点小故事。预训练的概念也是有发展历程的。
-传统的ML，我们是先有一个目标，比如做一个翻译软件，然后为了这个翻译功能，单独做了一个模型。
-后来有了迁移学习，我们可以有一个预训练模型，可以把这个模型的功能迁移到其他方面。
-再然后就是我们现代常说的预训练模型了。通过预先学习一些数据，然后通过tuning把行为对齐到任务。
-紧接着来到训练优化。
-为什么我们说跑AI很吃显存呢？因为一个训练step，你要过forward，过backend，再过optimizer。这个过程中的weight、grads、Adam的状态、激活等数据，全部都存在了显存当中。如果你在做并行，那这些更是要拷贝到其他GPU上，显存冗余更加严重。
-于是就有了训练优化的方向：
-ZeRO：切分optimizer state, gradients和parameters。以通信换存储。
-并行：并行是一种思想。张量并行、流水并行等等
-FlashAttention：需要一点GPU知识。GPU里有HBM和SRAM，你可以把HBM理解为存储，SRAM理解为内存。FlasAttention就是把本该反复对HBM进行IO的计算任务，转为全程在SRAM计算。
-混合精度：其实就是局部调数据精度，真的没什么含金量。
-接下来是SFT（监督学习）和LoRA。这两个概念就没必要讲了吧。
+接下来从Lecture 4到Lecture 6几乎都是纯工程内容，你全部看完以后再来记录。 回来了。春晚实在是太烂了，还不如看讲座呢。 其实Lecture 3就已经是在讲LLM了，只不过讲的是推理部分。 你先别急着问为什么先讲推理再讲训练，我也想问。 言归正传，我们来看Lecture 4到6 Lecture 4讲了LLM的训练。 预训练的概念很简单了，我们不再重复。就说一点小故事。预训练的概念也是有发展历程的。 传统的ML，我们是先有一个目标，比如做一个翻译软件，然后为了这个翻译功能，单独做了一个模型。 后来有了迁移学习，我们可以有一个预训练模型，可以把这个模型的功能迁移到其他方面。 再然后就是我们现代常说的预训练模型了。通过预先学习一些数据，然后通过tuning把行为对齐到任务。 紧接着来到训练优化。 为什么我们说跑AI很吃显存呢？因为一个训练step，你要过forward，过backend，再过optimizer。这个过程中的weight、grads、Adam的状态、激活等数据，全部都存在了显存当中。如果你在做并行，那这些更是要拷贝到其他GPU上，显存冗余更加严重。 于是就有了训练优化的方向： ZeRO：切分optimizer state, gradients和parameters。以通信换存储。 并行：并行是一种思想。张量并行、流水并行等等 FlashAttention：需要一点GPU知识。GPU里有HBM和SRAM，你可以把HBM理解为存储，SRAM理解为内存。FlasAttention就是把本该反复对HBM进行IO的计算任务，转为全程在SRAM计算。 混合精度：其实就是局部调数据精度，真的没什么含金量。 接下来是SFT（监督学习）和LoRA。这两个概念就没必要讲了吧。
 
-来到Lecture 5，引入了一个新的概念叫Preference tuning。
-如果说SFT是让LLM掌握某一方面的知识，那Preference tuning就是让LLM的输出，更符合人们想要的输出，比如让AI的回答更加温柔，让AI拒绝回答关于犯罪的问题等等。
-**让AI学会偏好，从这里开始我们要接触一些强化学习了。虽然有点难，但还是出来了**。
-常见方法有两种：RLHF和DPO
-我不行了到这里我真的看不懂了。
+来到Lecture 5，引入了一个新的概念叫Preference tuning。 如果说SFT是让LLM掌握某一方面的知识，那Preference tuning就是让LLM的输出，更符合人们想要的输出，比如让AI的回答更加温柔，让AI拒绝回答关于犯罪的问题等等。 **让AI学会偏好，从这里开始我们要接触一些强化学习了。虽然有点难，但还是出来了**。 常见方法有两种：RLHF和DPO 我不行了到这里我真的看不懂了。
 
 你且记住强化学习这部分你是一点儿不懂。
