@@ -1,0 +1,17 @@
+{
+  "name": "suzuki106-blog",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/build-manifest.js && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  },
+  "dependencies": {
+    "katex": "^0.16.0",
+    "marked": "^15.0.0"
+  }
+}
